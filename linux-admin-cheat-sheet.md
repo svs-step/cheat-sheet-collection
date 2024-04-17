@@ -299,404 +299,209 @@ free -s|--seconds 5 # Show memory usage and update continuously every five secon
 # Exécution périodique commande
 watch -n 1 -d commande
 ```
-
-  
-
 ## Packages
-
-  
-
-```bash
-
+```sh
 apt update # Refreshes repository index
-
 apt search wget # Search for a package
-
 apt show wget # List information about the wget package
-
 apt list --all-versions wget # List all versions of the package
-
 apt install wget # Install the latest version of the wget package
-
 apt install wget=1.2.3 # Install a specific version of the wget package
-
 apt remove wget # Removes the wget package
 
 apt upgrade # Upgrades all upgradable packages
 
+apt-cache 
+
+apt autoremove
+apt autoclean
+
+dpkg (à compléter)
 ```
-
 ### Librairies linux utiles
-
 - bash-completion
   
-
 ## Shutdown and Reboot
-
-  
-
-```bash
-
+```sh
 shutdown # Shutdown in 1 minute
-
 shutdown now "Cya later" # Immediately shut down
-
 shutdown +5 "Cya later" # Shutdown in 5 minutes
-
-  
-
 shutdown --reboot # Reboot in 1 minute
-
 shutdown -r now "Cya later" # Immediately reboot
-
 shutdown -r +5 "Cya later" # Reboot in 5 minutes
-
-  
-
 shutdown -c # Cancel a shutdown or reboot
 
-  
-
 reboot # Reboot now
-
 reboot -f # Force a reboot
-
 ```
 
-  
-
 ## Identifying Processes
+```sh
+top 		# List all processes interactively
 
-  
+htop 		# List all processes interactively
 
-```bash
+bpytop  	# (à installer)
 
-top # List all processes interactively
+ps all 		# List all processes
 
-htop # List all processes interactively
+pidof foo 	# Return the PID of all foo processes
 
-ps all # List all processes
+CTRL+Z 		# Suspend a process running in the foreground
 
-pidof foo # Return the PID of all foo processes
+bg 			# Resume a suspended process and run in the background
 
-  
-
-CTRL+Z # Suspend a process running in the foreground
-
-bg # Resume a suspended process and run in the background
-
-fg # Bring the last background process to the foreground
-
-fg 1 # Bring the background process with the PID to the foreground
-
-  
+fg 			# Bring the last background process to the foreground
+fg 1 		# Bring the background process with the PID to the foreground
 
 sleep 30 & # Sleep for 30 seconds and move the process into the background
 
-jobs # List all background jobs
+jobs 		# List all background jobs
+jobs -p 	# List all background jobs with their PID
 
-jobs -p # List all background jobs with their PID
-
-  
-
-lsof # List all open files and the process using them
-
+lsof 		# List all open files and the process using them
 lsof -itcp:4000 # Return the process listening on port 4000
-
 ```
-
-  
 
 ## Process Priority
-
-  
-
 Process priorities go from -20 (highest) to 19 (lowest).
-
-  
-
-```bash
-
+```sh
 nice -n -20 foo # Change process priority by name
-
 renice 20 PID # Change process priority by PID
-
 ps -o ni PID # Return the process priority of PID
-
 ```
 
-  
-
 ## Killing Processes
-
-  
-
-```bash
-
+```sh
 CTRL+C # Kill a process running in the foreground
 
 kill PID # Shut down process by PID gracefully. Sends TERM signal.
-
 kill -9 PID # Force shut down of process by PID. Sends SIGKILL signal.
 
 pkill foo # Shut down process by name gracefully. Sends TERM signal.
-
 pkill -9 foo # force shut down process by name. Sends SIGKILL signal.
 
 killall foo # Kill all process with the specified name gracefully.
-
 ```
-
-  
 
 ## Date & Time
-
-  
-
-```bash
-
+```sh
 date # Print the date and time
-
 date --iso-8601 # Print the ISO8601 date
-
 date --iso-8601=ns # Print the ISO8601 date and time
 
-  
-
 time tree # Time how long the tree command takes to execute
-
 ```
 
-  
-
 ## Scheduled Tasks
-
-  
-
 ```pre
 
 * * * * *
-
 Minute, Hour, Day of month, Month, Day of the week
 
 ```
 
-  
-
-```bash
-
+```sh
 crontab -l # List cron tab
-
 crontab -e # Edit cron tab in Vim
-
 crontab /path/crontab # Load cron tab from a file
-
 crontab -l > /path/crontab # Save cron tab to a file
 
-  
-
 * * * * * foo # Run foo every minute
-
 */15 * * * * foo # Run foo every 15 minutes
-
 0 * * * * foo # Run foo every hour
-
 15 6 * * * foo # Run foo daily at 6:15 AM
-
 44 4 * * 5 foo # Run foo every Friday at 4:44 AM
-
 0 0 1 * * foo # Run foo at midnight on the first of the month
-
 0 0 1 1 * foo # Run foo at midnight on the first of the year
 
-  
-
 at -l # List scheduled tasks
-
 at -c 1 # Show task with ID 1
-
 at -r 1 # Remove task with ID 1
-
 at now + 2 minutes # Create a task in Vim to execute in 2 minutes
-
 at 12:34 PM next month # Create a task in Vim to execute at 12:34 PM next month
-
 at tomorrow # Create a task in Vim to execute tomorrow
-
 ```
-
-  
 
 ## HTTP Requests
-
-  
-
-```bash
-
+```sh
 curl https://example.com # Return response body
-
 curl -i|--include https://example.com # Include status code and HTTP headers
-
 curl -L|--location https://example.com # Follow redirects
-
 curl -o|--remote-name foo.txt https://example.com # Output to a text file
-
 curl -H|--header "User-Agent: Foo" https://example.com # Add a HTTP header
-
 curl -X|--request POST -H "Content-Type: application/json" -d|--data '{"foo":"bar"}' https://example.com # POST JSON
-
 curl -X POST -H --data-urlencode foo="bar" http://example.com # POST URL Form Encoded
 
-  
-
 wget https://example.com/file.txt . # Download a file to the current directory
-
 wget -O|--output-document foo.txt https://example.com/file.txt # Output to a file with the specified name
-
 ```
 
-  
-
 ## Network Troubleshooting
-
-  
-
-```bash
-
+```sh
 ping example.com # Send multiple ping requests using the ICMP protocol
-
 ping -c 10 -i 5 example.com # Make 10 attempts, 5 seconds apart
 
-  
-
 ip addr # List IP addresses on the system
-
 ip route show # Show IP addresses to router
 
-  
-
 netstat -i|--interfaces # List all network interfaces and in/out usage
-
 netstat -l|--listening # List all open ports
-
-  
 
 traceroute example.com # List all servers the network traffic goes through
 
-  
-
 mtr -w|--report-wide example.com # Continually list all servers the network traffic goes through
-
 mtr -r|--report -w|--report-wide -c|--report-cycles 100 example.com # Output a report that lists network traffic 100 times
 
-  
-
 nmap 0.0.0.0 # Scan for the 1000 most common open ports on localhost
-
 nmap 0.0.0.0 -p1-65535 # Scan for open ports on localhost between 1 and 65535
-
 nmap 192.168.4.3 # Scan for the 1000 most common open ports on a remote IP address
-
 nmap -sP 192.168.1.1/24 # Discover all machines on the network by ping'ing them
-
 ```
 
-  
-
 ## DNS
-
-  
-
-```bash
-
+```sh
 host example.com # Show the IPv4 and IPv6 addresses
-
-  
 
 dig example.com # Show complete DNS information
 
-  
-
 cat /etc/resolv.conf # resolv.conf lists nameservers
-
 ```
 
-  
-
 ## Hardware
-
-  
-
-```bash
-
+```sh
 lsusb # List USB devices
 
 lspci # List PCI hardware
 
 lshw # List all hardware
-
 ```
-
-  
 
 ## Terminal Multiplexers
-
-  
-
 Start multiple terminal sessions. Active sessions persist reboots. `tmux` is more modern than `screen`.
-
-  
-
-```bash
-
+```sh
 tmux # Start a new session (CTRL-b + d to detach)
-
 tmux ls # List all sessions
-
 tmux attach -t 0 # Reattach to a session
 
-  
-
 screen # Start a new session (CTRL-a + d to detach)
-
 screen -ls # List all sessions
-
 screen -R 31166 # Reattach to a session
 
-  
-
 exit # Exit a session
-
 ```
-
-  
 
 ## Secure Shell Protocol (SSH)
-
-  
-
-```bash
-
+```sh
 ssh hostname # Connect to hostname using your current user name over the default SSH port 22
-
 ssh -i foo.pem hostname # Connect to hostname using the identity file
-
 ssh user@hostname # Connect to hostname using the user over the default SSH port 22
-
 ssh user@hostname -p 8765 # Connect to hostname using the user over a custom port
-
 ssh ssh://user@hostname:8765 # Connect to hostname using the user over a custom port
-
 ```
 
-  
-
 Set default user and port in `~/.ssh/config`, so you can just enter the name next time:
-
-  
-
-```bash
-
+```sh
 $ cat ~/.ssh/config
 
 Host name
@@ -708,30 +513,16 @@ Hostname 127.0.0.1
 Port 8765
 
 $ ssh name
-
 ```
-
-  
 
 ## Secure Copy
-
-  
-
-```bash
-
+```sh
 scp foo.txt ubuntu@hostname:/home/ubuntu # Copy foo.txt into the specified remote directory
-
 ```
-
 
 ---
 
 ## Systemd
-Références:
-- https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units-fr
-- https://www.digitalocean.com/community/tutorials/how-to-use-journalctl-to-view-and-manipulate-systemd-logs
-- https://www.digitalocean.com/community/tutorials/how-to-centralize-logs-with-journald-on-ubuntu-20-04
-
 ### systemctl
 systemd est un gestionnaire de systèmes d’initialisation et de systèmes.
 #### Gestion de service
