@@ -615,6 +615,9 @@ apt upgrade # Upgrades all upgradable packages
 
 ```
 
+### Librairies linux utiles
+
+- bash-completion
   
 
 ## Shutdown and Reboot
