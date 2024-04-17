@@ -1,37 +1,30 @@
 
 ## Bash & utilitaires
 
-### Historique
+### Historique des commandes
 ```sh
-history
-!num_command 
-# Run the last command
-!!
+history           
+!<num_command>
+!!      # Exécuter la dernière commande
 ```
-### Déplacement dans système de fichier
+### Informations sur les fichiers
 ```sh
-# Print current directory path
-pwd 
-# List directories
-ls 
-# List directories including hidden
-ls -a|--all 
-# List directories in long form
-ls -l 
-# List directories in long form with human readable sizes
-ls -l -h|--human-readable 
-# List directories by modification time, newest firs
-ls -t t
-# List size, created and modified timestamps for a file
-stat foo.txt 
+pwd         	# Emplacement actuel
 
-stat foo # List size, created and modified timestamps for a directory
+ls      
+ls -a|--all 	# Liste de tous les dossiers et fichiers (dont cachés)
+ls -l 			# Liste format long dossiers et fichiers
+ls -l -h    	# h pour --human-readable 
+ls -t			# t pour classés par modification time, newest first
 
-tree # List directory and file tree
+stat my_file 	# size, date creation acces modification 
 
-tree -a # List directory and file tree including hidden
+tree 			# List directory and file tree
+tree -a 		# List directory and file tree including hidden
+tree -d 		# List directory tree
+tree -L 1		# L pour level - Profondeur de l'arbre
 
-tree -d # List directory tree
+exa 			# remplacement tree - https://the.exa.website/
 
 cd foo # Go to foo sub-directory
 
