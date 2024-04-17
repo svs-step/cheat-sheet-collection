@@ -11,7 +11,7 @@ history
 ```sh
 pwd         	# Emplacement actuel
 
-ls      
+ls      		# Liste des fichiers
 ls -a|--all 	# Liste de tous les dossiers et fichiers (dont cachés)
 ls -l 			# Liste format long dossiers et fichiers
 ls -l -h    	# h pour --human-readable 
@@ -26,56 +26,29 @@ tree -L 1		# L pour level - Profondeur de l'arbre
 
 exa 			# remplacement tree - https://the.exa.website/
 
-cd foo # Go to foo sub-directory
+cd mon_dossier 	# Go to foo sub-directory
+cd 				# Go to home
+cd ~ 			# Go to home
+cd - 			# Go to last directory
 
-cd # Go to home directory
-
-cd ~ # Go to home directory
-
-cd - # Go to last directory
-
-pushd foo # Go to foo sub-directory and add previous directory to stack
-
-popd # Go back to directory in stack saved by `pushd`
+pushd foo 		# Go to foo sub-directory and add previous directory to stack
+popd 			# Go back to directory in stack saved by `pushd`
 
 ```
-
-  
-
-## Creating Directories
-
-  
-
-```bash
-
-mkdir foo # Create a directory
-
-mkdir foo bar # Create multiple directories
-
+## Création de dossier
+```sh
+mkdir mon_dossier # Create a directory
 mkdir -p|--parents foo/bar # Create nested directory
-
 mkdir -p|--parents {foo,bar}/baz # Create multiple nested directories
 
-  
-
 mktemp -d|--directory # Create a temporary directory
-
 ```
+## Déplacements et copies
+```sh
+cp -R|--recursive dir_1 dir_2 # Copy directory
+mv foo bar 		# Déplacement vs renommage
 
-  
-
-## Moving Directories
-
-  
-
-```bash
-
-cp -R|--recursive foo bar # Copy directory
-
-mv foo bar # Move directory
-
-  
-
+# Copie distante
 rsync -z|--compress -v|--verbose /foo /bar # Copy directory, overwrites destination
 
 rsync -a|--archive -z|--compress -v|--verbose /foo /bar # Copy directory, without overwriting destination
@@ -85,136 +58,74 @@ rsync -avz /foo username@hostname:/bar # Copy local directory to remote director
 rsync -avz username@hostname:/foo /bar # Copy remote directory to local directory
 
 ```
-
-  
-
-## Deleting Directories
-
-  
-
-```bash
-
-rmdir foo # Delete empty directory
+## Supprimer dossier
+```sh
+rmdir dir_1 # Delete empty directory
 
 rm -r|--recursive foo # Delete directory including contents
 
 rm -r|--recursive -f|--force foo # Delete directory including contents, ignore nonexistent files and never prompt
 
 ```
-
-  
-
-## Creating Files
-
-  
-
-```bash
-
+## Création fichier
+```sh
 touch foo.txt # Create file or update existing files modified timestamp
-
 touch foo.txt bar.txt # Create multiple files
-
 touch {foo,bar}.txt # Create multiple files
-
 touch test{1..3} # Create test1, test2 and test3 files
-
 touch test{a..c} # Create testa, testb and testc files
 
-  
-
 mktemp # Create a temporary file
-
 ```
-
-  
-
-## Standard Output, Standard Error and Standard Input
-
-  
-
-```bash
-
+## Sorties Standard Error & entrée Input
+```sh
 echo "foo" > bar.txt # Overwrite file with content
-
 echo "foo" >> bar.txt # Append to file with content
 
-  
-
 ls exists 1> stdout.txt # Redirect the standard output to a file
-
 ls noexist 2> stderror.txt # Redirect the standard error output to a file
-
 ls 2>&1 > out.txt # Redirect standard output and error to a file
-
 ls > /dev/null # Discard standard output and error
 
-  
-
 read foo # Read from standard input and write to the variable foo
-
 ```
-
-  
-
-## Moving Files
-
-  
-
-```bash
-
+## Déplacement fichier
+```sh
 cp foo.txt bar.txt # Copy file
 
 mv foo.txt bar.txt # Move file
 
-  
-
 rsync -z|--compress -v|--verbose /foo.txt /bar # Copy file quickly if not changed
 
 rsync z|--compress -v|--verbose /foo.txt /bar.txt # Copy and rename file quickly if not changed
-
 ```
-
-  
-
-## Deleting Files
-
-  
-
-```bash
-
+## Suppression fihier
+```sh
 rm foo.txt # Delete file
 
 rm -f|--force foo.txt # Delete file, ignore nonexistent files and never prompt
-
 ```
-
-  
-
-## Reading Files
-
-  
-
-```bash
-
+## Lire des fichiers
+```sh
 cat foo.txt # Print all contents
 
 less foo.txt # Print some contents at a time (g - go to top of file, SHIFT+g, go to bottom of file, /foo to search for 'foo')
 
 head foo.txt # Print top 10 lines of file
+head -n n fichier_1
 
 tail foo.txt # Print bottom 10 lines of file
+tail -n n fichier_1
 
 open foo.txt # Open file in the default editor
 
-wc foo.txt # List number of lines words and characters in the file
+update-alternatives --display editor
+sudo update-alternatives --config editor
+
+wc fichier.txt # List number of lines words and characters in the file
 
 ```
-
-  
-
 ## File Permissions
-
-  
 
 | # | Permission | rwx | Binary |
 
@@ -236,11 +147,7 @@ wc foo.txt # List number of lines words and characters in the file
 
 | 0 | none | --- | 000 |
 
-  
-
 For a directory, execute means you can enter a directory.
-
-  
 
 | User | Group | Others | Description |
 
@@ -250,8 +157,6 @@ For a directory, execute means you can enter a directory.
 
 | 7 | 5 | 5 | User can read, write and execute, everyone else can read and execute (Default directory permissions) |
 
-  
-
 - u - User
 
 - g - Group
@@ -260,326 +165,139 @@ For a directory, execute means you can enter a directory.
 
 - a - All of the above
 
-  
-
-```bash
-
+```sh
 ls -l /foo.sh # List file permissions
 
-chmod +100 foo.sh # Add 1 to the user permission
-
-chmod -100 foo.sh # Subtract 1 from the user permission
-
-chmod u+x foo.sh # Give the user execute permission
-
-chmod g+x foo.sh # Give the group execute permission
-
+chmod +100 foo.sh 	# Add 1 to the user permission
+chmod -100 foo.sh 	# Subtract 1 from the user permission
+chmod u+x foo.sh 	# Give the user execute permission
+chmod g+x foo.sh 	# Give the group execute permission
 chmod u-x,g-x foo.sh # Take away the user and group execute permission
-
 chmod u+x,g+x,o+x foo.sh # Give everybody execute permission
-
-chmod a+x foo.sh # Give everybody execute permission
-
-chmod +x foo.sh # Give everybody execute permission
-
+chmod a+x foo.sh 	# Give everybody execute permission
+chmod +x foo.sh 	# Give everybody execute permission
 ```
-
-  
-
 ## Finding Files
+```sh
+type wget 			# Find the binary
 
-  
+which wget 			# Find the binary
 
-Find binary files for a command.
-
-  
-
-```bash
-
-type wget # Find the binary
-
-which wget # Find the binary
-
-whereis wget # Find the binary, source, and manual page files
-
+whereis wget 		# Find the binary, source, and manual page files
 ```
 
-  
+`locate` uses an index and is fast (à installer)
+```sh
+updatedb 			# Update the index
 
-`locate` uses an index and is fast.
-
-  
-
-```bash
-
-updatedb # Update the index
-
-  
-
-locate foo.txt # Find a file
-
+locate foo.txt 		# Find a file
 locate --ignore-case # Find a file and ignore case
-
-locate f*.txt # Find a text file starting with 'f'
-
+locate f*.txt 		# Find a text file starting with 'f'
 ```
-
-  
 
 `find` doesn't use an index and is slow.
-
-  
-
 ```bash
-
-find /path -name foo.txt # Find a file
-
-find /path -iname foo.txt # Find a file with case insensitive search
-
-find /path -name "*.txt" # Find all text files
-
+find /path -name foo.txt 	# Find a file
+find /path -iname foo.txt 	# Find a file with case insensitive search
+find /path -name "*.txt" 	# Find all text files
 find /path -name foo.txt -delete # Find a file and delete it
-
 find /path -name "*.png" -exec pngquant {} # Find all .png files and execute pngquant on it
-
 find /path -type f -name foo.txt # Find a file
-
 find /path -type d -name foo # Find a directory
-
 find /path -type l -name foo.txt # Find a symbolic link
-
 find /path -type f -mtime +30 # Find files that haven't been modified in 30 days
-
 find /path -type f -mtime +30 -delete # Delete files that haven't been modified in 30 days
-
 ```
-
-  
-
 ## Find in Files
-
-  
-
-```bash
-
-grep 'foo' /bar.txt # Search for 'foo' in file 'bar.txt'
-
-grep 'foo' /bar -r|--recursive # Search for 'foo' in directory 'bar'
-
+```sh
+grep 'foo' /bar.txt 	# Search for 'foo' in file 'bar.txt'
+grep 'foo' /ba
 grep 'foo' /bar -R|--dereference-recursive # Search for 'foo' in directory 'bar' and follow symbolic links
-
 grep 'foo' /bar -l|--files-with-matches # Show only files that match
-
 grep 'foo' /bar -L|--files-without-match # Show only files that don't match
-
 grep 'Foo' /bar -i|--ignore-case # Case insensitive search
-
 grep 'foo' /bar -x|--line-regexp # Match the entire line
-
 grep 'foo' /bar -C|--context 1 # Add N line of context above and below each search result
-
 grep 'foo' /bar -v|--invert-match # Show only lines that don't match
-
 grep 'foo' /bar -c|--count # Count the number lines that match
-
 grep 'foo' /bar -n|--line-number # Add line numbers
-
 grep 'foo' /bar --colour # Add colour to output
-
 grep 'foo\|bar' /baz -R # Search for 'foo' or 'bar' in directory 'baz'
-
 grep --extended-regexp|-E 'foo|bar' /baz -R # Use regular expressions
-
 egrep 'foo|bar' /baz -R # Use regular expressions
-
 ```
-
-  
-
 ### Replace in Files
-
-  
-
-```bash
-
+```sh
 sed 's/fox/bear/g' foo.txt # Replace fox with bear in foo.txt and output to console
-
 sed 's/fox/bear/gi' foo.txt # Replace fox (case insensitive) with bear in foo.txt and output to console
-
 sed 's/red fox/blue bear/g' foo.txt # Replace red with blue and fox with bear in foo.txt and output to console
-
 sed 's/fox/bear/g' foo.txt > bar.txt # Replace fox with bear in foo.txt and save in bar.txt
-
 sed 's/fox/bear/g' foo.txt -i|--in-place # Replace fox with bear and overwrite foo.txt
-
 ```
-
-  
-
 ## Symbolic Links
-
-  
-
-```bash
-
+```sh
 ln -s|--symbolic foo bar # Create a link 'bar' to the 'foo' folder
-
 ln -s|--symbolic -f|--force foo bar # Overwrite an existing symbolic link 'bar'
 
 ls -l # Show where symbolic links are pointing
-
 ```
-
-  
-
 ## Compressing Files
-
-  
-
 ### zip
-
-  
-
 Compresses one or more files into *.zip files.
-
-  
-
-```bash
-
+```sh
 zip foo.zip /bar.txt # Compress bar.txt into foo.zip
-
 zip foo.zip /bar.txt /baz.txt # Compress bar.txt and baz.txt into foo.zip
-
 zip foo.zip /{bar,baz}.txt # Compress bar.txt and baz.txt into foo.zip
-
 zip -r|--recurse-paths foo.zip /bar # Compress directory bar into foo.zip
-
 ```
-
-  
-
 ### gzip
-
-  
-
 Compresses a single file into *.gz files.
-
-  
-
-```bash
-
+```sh
 gzip /bar.txt foo.gz # Compress bar.txt into foo.gz and then delete bar.txt
-
 gzip -k|--keep /bar.txt foo.gz # Compress bar.txt into foo.gz
-
 ```
-
-  
-
 ### tar -c
-
-  
-
 Compresses (optionally) and combines one or more files into a single *.tar, *.tar.gz, *.tpz or *.tgz file.
-
-  
-
-```bash
-
+```sh
 tar -c|--create -z|--gzip -f|--file=foo.tgz /bar.txt /baz.txt # Compress bar.txt and baz.txt into foo.tgz
-
 tar -c|--create -z|--gzip -f|--file=foo.tgz /{bar,baz}.txt # Compress bar.txt and baz.txt into foo.tgz
-
 tar -c|--create -z|--gzip -f|--file=foo.tgz /bar # Compress directory bar into foo.tgz
-
 ```
-
-  
-
 ## Decompressing Files
-
-  
-
 ### unzip
-
-  
-
-```bash
-
+```sh
 unzip foo.zip # Unzip foo.zip into current directory
-
 ```
-
-  
-
 ### gunzip
-
-  
-
-```bash
-
+```sh
 gunzip foo.gz # Unzip foo.gz into current directory and delete foo.gz
-
 gunzip -k|--keep foo.gz # Unzip foo.gz into current directory
-
 ```
-
-  
-
 ### tar -x
-
-  
-
-```bash
-
+```sh
 tar -x|--extract -z|--gzip -f|--file=foo.tar.gz # Un-compress foo.tar.gz into current directory
-
 tar -x|--extract -f|--file=foo.tar # Un-combine foo.tar into current directory
-
 ```
-
-  
-
 ## Disk Usage
-
-  
-
-```bash
-
+```sh
 df # List disks, size, used and available space
-
 df -h|--human-readable # List disks, size, used and available space in a human readable format
 
-  
-
 du # List current directory, subdirectories and file sizes
-
 du /foo/bar # List specified directory, subdirectories and file sizes
-
 du -h|--human-readable # List current directory, subdirectories and file sizes in a human readable format
-
 du -d|--max-depth # List current directory, subdirectories and file sizes within the max depth
-
 du -d 0 # List current directory size
-
 ```
-
-  
-
 ## Memory Usage
-
-  
-
-```bash
-
+```sh
 free # Show memory usage
-
 free -h|--human # Show human readable memory usage
-
 free -h|--human --si # Show human readable memory usage in power of 1000 instead of 1024
-
 free -s|--seconds 5 # Show memory usage and update continuously every five seconds
 
+# Exécution périodique commande
+watch -n 1 -d commande
 ```
 
   
