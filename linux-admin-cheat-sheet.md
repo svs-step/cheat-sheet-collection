@@ -526,35 +526,37 @@ scp foo.txt ubuntu@hostname:/home/ubuntu # Copy foo.txt into the specified remot
 ### systemctl
 systemd est un gestionnaire de systèmes d’initialisation et de systèmes.
 #### Gestion de service
-L’objectif fondamental d’un système d’initialisation est d’initialiser les composants qui doivent être démarrés une fois que le noyau Linux est lancé (traditionnellement connus sous le nom de composants « userland »). De plus, le système d’initialisation vous permet de gérer à tout moment les services et les démons du serveur alors que le système est en marche. Dans cette optique, nous allons commencer par certaines des opérations de base de gestion de service.
 ```sh
 # Démarrage et arrêt des services
-sudo systemctl start application[.service]
-sudo systemctl stop application.service
-sudo systemctl restart application.service
-sudo systemctl reload application.service
-sudo systemctl reload-or-restart application.service # si doute sur implémentation reload
+sudo systemctl start nom_app[.service]
+sudo systemctl stop nom_app.service
+sudo systemctl restart nom_app.service
+sudo systemctl reload nom_app.service
+sudo systemctl reload-or-restart nom_app.service # si doute sur implémentation reload
 
 # Activation et désactivation des services
-sudo systemctl enable application.service
-sudo systemctl disable application.service
+sudo systemctl enable nom_app.service
+sudo systemctl disable nom_app.service
 
 # Vérification de l’état des services
-systemctl status application.service
-systemctl is-active application.service
-systemctl is-enabled application.service
-systemctl is-failed application.service
+systemctl status nom_app.service
+systemctl is-active nom_app.service
+systemctl is-enabled nom_app.service
+systemctl is-failed nom_app.service
 ```
 #### État du système
 ```sh
 # Liste des unités en cours d’utilisation
-systemctl list-units   # Affiche uniquement les unités actives par défaut # systemctl 
-"UNIT : le nom de l’unité systemd
-LOAD : si la configuration de l’unité a été analysée par systemd. La configuration des unités chargées est gardée en mémoire.
-ACTIVE : résumé indiquant si l’unité est active
-SUB : état de niveau inférieur qui donne des informations plus détaillées sur l’unité
-DESCRIPTION : courte description textuelle de ce que l’unité est/fait."
+systemctl [list-units]   # Uniquement unités actives par défaut 
+```
+	Informations affichées:
+	UNIT : nom de l’unité systemd
+	LOAD : si la configuration de l’unité a été analysée par systemd. La configuration des unités chargées est gardée en mémoire.
+	ACTIVE : résumé indiquant si l’unité est active
+	SUB : état niveau inférieur qui donne des informations plus détaillées sur l’unité
+	DESCRIPTION : courte description textuelle de ce que l’unité est/fait.
 
+```sh
 systemctl list-units --all
 "En sysV"
 service --status-all
